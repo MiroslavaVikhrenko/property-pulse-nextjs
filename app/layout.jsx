@@ -1,3 +1,4 @@
+import Navbar from '@/components/Navbar';
 import '@/assets/styles/global.css';
 
 export const metadata ={
@@ -7,11 +8,14 @@ export const metadata ={
 };
 
 const MainLayout = ({children}) => {
-    return ( <html>
+    return ( 
+    <html>
         <body>
+            <Navbar />
             <main>{children}</main>
         </body>
-    </html> );
-}
+    </html> 
+    );
+};
  
 export default MainLayout;
