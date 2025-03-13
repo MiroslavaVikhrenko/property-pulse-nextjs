@@ -6,6 +6,20 @@ import { revalidatePath } from "next/cache"; // once we submit => it'll update t
 import {redirect} from 'next/navigation';
 
 async function addProperty(formData) {
+
+    // Connect to db
+    await connectDB();
+
+    const sessionUser = await getSessionUser();
+
+    // Check for it
+    if(!sessionUser || !sessionUser.userId) {
+        throw new Error('User ID is required') // It will show a custom Error page
+    }
+
+    // Get user Id from sessionUser (getSessionUser() returns user Id)
+    const {userId} = sessionUser;
+
     // Access all values from amenities and images => we use exact field names from PropertyAddForm component
     const amenities = formData.getAll('amenities')
     // Images are different as getAll() would give us image objects, not just the name
@@ -22,6 +36,8 @@ async function addProperty(formData) {
     //console.log(images);
 
     const propertyData = {
+        owner: userId, // this way it's connected to an actual user and now we know who is submitting a new property
+
         // get() as it's a single value
         type: formData.get('type'),
         name: formData.get('name'),
@@ -49,6 +65,16 @@ async function addProperty(formData) {
         images
     };
     //console.log(propertyData);
+
+    // Use Property model to create a new property
+    const newProperty = new Property(propertyData);
+    await newProperty.save();
+
+    // Revalidate path
+    revalidatePath('/', 'layout');
+
+    // Redirect to the new property page
+    redirect(`/properties/${newProperty._id}`);
 }
 
 export default addProperty;
