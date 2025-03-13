@@ -4,6 +4,7 @@ import Property from "@/models/Property";
 import { getSessionUser } from "@/utils/getSessionUser";
 import { revalidatePath } from "next/cache"; // once we submit => it'll update the cache and update the listings
 import {redirect} from 'next/navigation';
+import cloudinary from "@/config/cloudinary";
 
 async function addProperty(formData) {
 
@@ -29,11 +30,17 @@ async function addProperty(formData) {
     // map() => re-format it to just an array of image names
 
     //ultimately these images are going to come from Cloudinary 
+    // const images = formData
+    //     .getAll('images')
+    //     .filter((image) => image.name !== '')
+    //     .map((image) => image.name);
+    //console.log(images);
+
+    // After connecting Cloudinary:
     const images = formData
         .getAll('images')
         .filter((image) => image.name !== '')
-        .map((image) => image.name);
-    //console.log(images);
+        ;
 
     const propertyData = {
         owner: userId, // this way it's connected to an actual user and now we know who is submitting a new property
@@ -62,9 +69,35 @@ async function addProperty(formData) {
             email: formData.get('seller_info.email'),
             phone: formData.get('seller_info.phone'),
         },
-        images
+        //images, // after connecting to Cloudinary
     };
     //console.log(propertyData);
+
+    // Cloudinary (empty array of image URLs)
+    const imageUrls = [];
+
+    // Loop over all image files, convert them to base64
+    // images => image objects uploaded from the form
+    for (const imageFile of images){
+        const imageBuffer = await imageFile.arrayBuffer();
+        const imageArray = Array.from(new Uint8Array(imageBuffer));
+        const imageData = Buffer.from(imageArray);
+
+        // Convert to base64 (that's how we need to send it with the request)
+        const imageBase64 = imageData.toString('base64'); // Now we can make a request
+
+        // Make request to Cloudinary (uploader object, upload() method)
+        // 'folder' is optional object that we can pass to upload() 
+        const result = await cloudinary.uploader.upload(`data:image/png;base64,${imageBase64}`, {
+            folder: 'propertypulse'
+        });
+        // Add each image to the array 
+        // secure_url property = cloudinary URL that we want to add to array and ultimately add to db
+        imageUrls.push(result.secure_url);
+    }
+
+    // In order to add image URLs to the db
+    propertyData.images = imageUrls;
 
     // Use Property model to create a new property
     const newProperty = new Property(propertyData);
