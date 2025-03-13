@@ -1,4 +1,9 @@
 'use server';
+import connectDB from "@/config/database";
+import Property from "@/models/Property";
+import { getSessionUser } from "@/utils/getSessionUser";
+import { revalidatePath } from "next/cache"; // once we submit => it'll update the cache and update the listings
+import {redirect} from 'next/navigation';
 
 async function addProperty(formData) {
     // Access all values from amenities and images => we use exact field names from PropertyAddForm component
