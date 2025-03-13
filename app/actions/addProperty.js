@@ -43,7 +43,7 @@ async function addProperty(formData) {
         },
         images
     };
-    console.log(propertyData);
+    //console.log(propertyData);
 }
 
 export default addProperty;
