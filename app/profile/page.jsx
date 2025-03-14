@@ -15,6 +15,9 @@ const ProfilePage = async () => {
     if (!userId) {
         throw new Error('User ID is required'); // show error.jsx page
     }
+    // Get listings
+    const properties = await Property.find({owner: userId}).lean();
+    //console.log(properties);
     return (
         <section className="bg-blue-50">
       <div className="container m-auto py-24">
