@@ -10,7 +10,7 @@ async function deleteProperty(propertyId) {
     const sessionUser = await getSessionUser();
 
     // Check for the session
-    if (!sessionUser || !session.userId){
+    if (!sessionUser || !sessionUser.userId){
         throw new Error('User ID is required');
     }
 

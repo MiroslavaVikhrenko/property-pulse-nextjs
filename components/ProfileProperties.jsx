@@ -8,6 +8,23 @@ const ProfileProperties = ({properties:initialProperties}) => {
     // Create state
     const [properties, setProperties] = useState(initialProperties);
 
+    const handleDeleteProperty = async (propertyId) => {
+      // Confirmation since it's deletion
+      const confirmed = window.confirm('Are you sure you want to delete this property?');
+
+      // Check for not confirmed
+      if (!confirmed) return;
+      // Otherwise
+      await deleteProperty(propertyId);
+
+      // Update the state - filter out the one that's deleted
+      const updatedProperties = properties.filter((property) => property._id !== propertyId); // just put in variable
+
+      // Update the state - set property to updatedProperties
+      setProperties(updatedProperties);
+
+    }
+
     return properties.map((property) => (
         <div key={property._id} className="mb-10">
                 <Link href={`/properties/${property._id}`}>
@@ -35,6 +52,7 @@ const ProfileProperties = ({properties:initialProperties}) => {
                   <button
                     className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
                     type="button"
+                    onClick={() => handleDeleteProperty(property._id)}
                   >
                     Delete
                   </button>
