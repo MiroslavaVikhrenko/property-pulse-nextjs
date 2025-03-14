@@ -4,6 +4,7 @@ import Property from "@/models/Property";
 import { getSessionUser } from "@/utils/getSessionUser"; // to get user
 import profileDefault from '@/assets/images/profile.png'; // default image in case needed
 import ProfileProperties from "@/components/ProfileProperties";
+import {convertToSerializableObject} from '@/utils/convertToObject';
 
 const ProfilePage = async () => {
     // Connect to db
