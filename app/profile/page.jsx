@@ -18,7 +18,9 @@ const ProfilePage = async () => {
         throw new Error('User ID is required'); // show error.jsx page
     }
     // Get listings
-    const properties = await Property.find({owner: userId}).lean();
+    const propertiesDocs = await Property.find({owner: userId}).lean();
+    // Serialize lean documents using util function convertToSerializableObject()
+    const properties = propertiesDocs.map(convertToSerializableObject);
     //console.log(properties);
     return (
         <section className="bg-blue-50">
