@@ -2,6 +2,7 @@
 import {useState} from "react";
 import Image from 'next/image';
 import Link from 'next/link';
+import deleteProperty from "@/app/actions/deleteProperty";
 
 const ProfileProperties = ({properties:initialProperties}) => {
     // Create state
