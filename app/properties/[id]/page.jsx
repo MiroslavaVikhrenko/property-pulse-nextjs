@@ -5,10 +5,13 @@ import connectDB from "@/config/database";
 import Property from "@/models/Property";
 import Link from 'next/link';
 import { FaArrowLeft } from "react-icons/fa";
+import { convertToSerializableObject } from "@/utils/convertToObject";
 
 const PropertyPage = async ({ params }) => {
     await connectDB();
-    const property = await Property.findById(params.id).lean();
+
+    const propertyDoc = await Property.findById(params.id).lean();
+    const property = convertToSerializableObject(propertyDoc); // it's a single object, so we don't need to use map()
     return (
         <>
         <PropertyHeaderImage image={property.images[0]}/>
