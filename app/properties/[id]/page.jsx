@@ -12,6 +12,15 @@ const PropertyPage = async ({ params }) => {
 
     const propertyDoc = await Property.findById(params.id).lean();
     const property = convertToSerializableObject(propertyDoc); // it's a single object, so we don't need to use map()
+
+    // Add a check
+    if (!property) {
+      return (<h1 className='text-center text-2xl font-bold mt-10'>
+        Property Not Found
+        </h1>
+        );
+    }
+
     return (
         <>
         <PropertyHeaderImage image={property.images[0]}/>
