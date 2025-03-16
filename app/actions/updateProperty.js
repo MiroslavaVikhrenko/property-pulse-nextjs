@@ -43,7 +43,7 @@ async function updateProperty(propertyId, formData) {
         beds: formData.get('beds'),
         baths: formData.get('baths'),
         square_feet: formData.get('square_feet'),
-        amenities,
+        amenities: formData.getAll('amenities'),
         rates: {
             nightly: formData.get('rates.nightly'),
             weekly: formData.get('rates.weekly'),

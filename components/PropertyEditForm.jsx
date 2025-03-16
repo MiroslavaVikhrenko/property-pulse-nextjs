@@ -1,6 +1,12 @@
+import updateProperty from "@/app/actions/updateProperty";
+
 const PropertyEditForm = ({property}) => {
+
+    // Pass the ID => bind()
+    const updatePropertyById = updateProperty.bind(null, property._id);
+
     return (
-        <form>
+        <form action={updatePropertyById}>
             <h2 className="text-3xl text-center font-semibold mb-6">
               Edit Property
             </h2>
