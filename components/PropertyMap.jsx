@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { setDefaults, fromAddress } from "react-geocode";
 import Map, { Marker } from 'react-map-gl';
 import Image from 'next/image';
-import pin from '@/assets/images/pin.svg'
+import pin from '@/assets/images/pin.svg';
+import Spinner from "./Spinner";
 
 const PropertyMap = ({property}) => {
     // Get latitude => 
@@ -74,10 +75,10 @@ const PropertyMap = ({property}) => {
     }, []);
 
     // Check to see if loading is true => if true, return for now h3
-    if (loading) return <h3>Loading...</h3>
+    if (loading) return <Spinner />;
 
     // Check for error
-    if (geocodeError) return <div className="text-xl">No location data found</div>
+    if (geocodeError) return <div className="text-xl">No location data found</div>;
 
     return <div>Map</div>;
 };
