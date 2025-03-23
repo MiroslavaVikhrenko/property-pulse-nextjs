@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from "react";
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { setDefaults, fromAddress } from "react-geocode";
 import Map, { Marker } from 'react-map-gl';
 //import {Map, Marker } from "mapbox-gl";
