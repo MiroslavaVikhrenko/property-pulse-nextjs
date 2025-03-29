@@ -22,7 +22,7 @@ async function bookmarkProperty(propertyId) {
     const user = await User.findById(userId);
 
     // Check to see if this is bookmarked, is this property already in their bookmarks array
-    const isBookmarked = user.bookmarks.includes(propertyId); // boolean
+    let isBookmarked = user.bookmarks.includes(propertyId); // boolean
     let message; // because we want to send a message back based on if it's bookmarked or removed from bookmarks
 
     // Check
