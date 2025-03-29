@@ -1,4 +1,6 @@
 'use client'; // because we're going to use event handlers and hooks
+import { useState, useEffect } from 'react'; 
+// when component loads we want to check the status
 import bookmarkProperty from "@/app/actions/bookmarkProperty";
 import { toast } from "react-toastify"; // to use toast notifications
 import { FaBookmark } from "react-icons/fa";
@@ -9,6 +11,10 @@ const BookmarkButton = ({property}) => {
     const {data:session} = useSession();
     // Get user ID
     const userId = session?.user?.id;
+
+    // Add states
+    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     // If not logged in, they can't bookmark property
     const handleClick = async () => {
@@ -22,12 +28,18 @@ const BookmarkButton = ({property}) => {
         bookmarkProperty(property._id).then((res) =>{
             // Check for error
             if(res.error) return toast.error(res.error);
+            setIsBookmarked(res.isBookmarked); // isBookmarked from action
             // If no error 
             toast.success(res.message); // message from action
         })
     };
 
-    return (
+    return isBookmarked ? (
+        <button className="bg-red-500 hover:bg-red-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
+        onClick={handleClick}>
+            <FaBookmark className='mr-2'/> Remove Bookmark
+        </button>
+    ):(
         <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
         onClick={handleClick}>
             <FaBookmark className='mr-2'/> Bookmark Property
