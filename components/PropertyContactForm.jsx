@@ -99,14 +99,14 @@ const PropertyContactForm = ({property}) => {
                 <div className="mb-4">
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="message"
+                    htmlFor="body"
                   >
                     Message:
                   </label>
                   <textarea
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 h-44 focus:outline-none focus:shadow-outline"
-                    id="message"
-                    name="message"
+                    id="body"
+                    name="body"
                     placeholder="Enter your message"
                   ></textarea>
                 </div>
