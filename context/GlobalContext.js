@@ -3,7 +3,9 @@
 // we'll use context for it
 // Context is a way to share state between components and doing so without passing it into a component by props
 // we can alternatively use Redux package, but react has context API that we will use
-import { createContext, useContext, useState } from "react"; 
+import { createContext, useContext, useState, useEffect } from 'react'; 
+import { useSession } from 'next-auth/react';
+import getUnreadMessageCount from '@/app/actions/getUnreadMessageCount';
 
 // Create Context
 const GlobalContext = createContext();
@@ -16,12 +18,26 @@ export function GlobalProvider({children}) {
     // The only state that we want is the unread count - 0 by default
     const {unreadCount, setUnreadCount} = useState(0);
 
+    // Get the session
+    const {data: session} = useSession();
+
+    // We only want this to happen if user is logged in
+    // We don't want to fetch unread messages if it's guest
+    useEffect(() => {
+        if(session && session.user) {
+            // returns a promise
+            getUnreadMessageCount().then((res) =>{
+                if(res.count) setUnreadCount(res.count); // set the count in the state
+            });
+        }
+    }, [getUnreadMessageCount, session]);
+
     // Pass setUnreadCount so that the count can be changed within all components
     // wrapping {children} => which ultimately will be our entire app and all the components
     return (
         <GlobalContext.Provider value={{
             unreadCount,
-            setUnreadCount
+            setUnreadCount,
         }}>
             {children}
         </GlobalContext.Provider>
