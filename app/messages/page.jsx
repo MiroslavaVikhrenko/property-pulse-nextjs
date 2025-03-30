@@ -3,6 +3,7 @@ import Message from "@/models/Message";
 import '@/models/Property'; // Needed as we're going to use populate() method where we populate properties
 import { convertToSerializableObject } from "@/utils/convertToObject";
 import { getSessionUser } from "@/utils/getSessionUser";
+import MessageCard from "@/components/MessageCard";
 
 const MessagesPage = async () => {
     connectDB();
@@ -47,7 +48,7 @@ const MessagesPage = async () => {
                 <div className="space-y-4">
                     {messages.length === 0 ? (<p>You have no messages</p>) : (
                         messages.map((message) => (
-                            <h3 key={message._id}>{message.name}</h3>
+                            <MessageCard key={message._id} message={message} />
                         ))
                     )}
                 </div>
