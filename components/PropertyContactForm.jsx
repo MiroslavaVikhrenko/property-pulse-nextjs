@@ -4,7 +4,7 @@ import { useFormState } from 'react-dom'; //useActionState for react 19 = useFor
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import addMessage from "@/app/actions/addMessage";
-import { FaPaperPlane } from "react-icons/fa";
+import SubmitMessageButton from "./SubmitMessageButton";
 
 const PropertyContactForm = ({property}) => {
   // Get the session
@@ -111,7 +111,7 @@ const PropertyContactForm = ({property}) => {
                   ></textarea>
                 </div>
                 <div>
-                  
+                  <SubmitMessageButton />
                 </div>
               </form>
             </div>
