@@ -1,4 +1,5 @@
 import PropertyCard from '@/components/PropertyCard';
+import Pagination from '@/components/Pagination';
 import connectDB from '@/config/database';
 import Property from '@/models/Property';
 
@@ -25,6 +26,7 @@ const PropertiesPage = async ({searchParams: {page = 1, pageSize = 2}}) => {
                         }
                     </div>
                 )}
+                <Pagination />
             </div>
         </section>
     );
