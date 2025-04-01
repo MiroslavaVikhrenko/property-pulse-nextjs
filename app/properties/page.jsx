@@ -5,7 +5,7 @@ import Property from '@/models/Property';
 
 // searchParams for pagination => to be able to go to /properties?page=1 or 2, 3...
 // De-structure searchParams and set default 1 for page
-const PropertiesPage = async ({searchParams: {page = 1, pageSize = 2}}) => {
+const PropertiesPage = async ({searchParams: {page = 1, pageSize = 9}}) => {
     await connectDB();
 
     const skip = (page - 1) * pageSize;
