@@ -14,6 +14,10 @@ const PropertiesPage = async ({searchParams: {page = 1, pageSize = 9}}) => {
     // find({}) - passing empty object as not specifying filter, lean() - optimize query performance
     // by returning plain JS objects instead of mongoose documents (read only)
     const properties = await Property.find({}).skip(skip).limit(pageSize);
+
+    // Make sure that Pagination shows only if there is more than 1 page
+    const showPagination = total > pageSize;
+
     return (
         <section className='px-4 py-6'>
             <div className='container-xl lg:container m-auto px-4 py-6'>
@@ -26,11 +30,13 @@ const PropertiesPage = async ({searchParams: {page = 1, pageSize = 9}}) => {
                         }
                     </div>
                 )}
-                <Pagination 
+                {showPagination && (
+                    <Pagination 
                     page={parseInt(page)} 
                     pageSize={parseInt(pageSize)} 
                     totalItems={total} 
-                />
+                    />
+                )}
             </div>
         </section>
     );
