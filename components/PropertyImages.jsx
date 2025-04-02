@@ -20,7 +20,7 @@ const PropertyImages = ({images}) => {
                     ref={ref}
                     onClick={open}
                     alt=''
-                    className='object-cover h-[400px] mx-auto rounded-xl'
+                    className='object-cover h-[400px] mx-auto rounded-xl cursor-pointer'
                     width={1800}
                     height={400}
                     priority={true}
@@ -37,8 +37,8 @@ const PropertyImages = ({images}) => {
                                 : 'col-span-1'
                             }`}>
                             <Item
-                                original={images}
-                                thumbnail={images}
+                                original={image}
+                                thumbnail={image}
                                 width="1000"
                                 height="600"
                             > 
@@ -48,7 +48,7 @@ const PropertyImages = ({images}) => {
                                     ref={ref}
                                     onClick={open}
                                     alt=''
-                                    className='object-cover h-[400px] w-full rounded-xl'
+                                    className='object-cover h-[400px] w-full rounded-xl cursor-pointer'
                                     width={1800}
                                     height={400}
                                     priority={true}
